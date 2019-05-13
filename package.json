@@ -1,6 +1,6 @@
 {
   "name": "rtc-client",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Nodejs client for the RTC Reportable REST API.",
   "main": "index.js",
   "scripts": {
