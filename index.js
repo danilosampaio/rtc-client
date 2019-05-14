@@ -146,15 +146,11 @@ class RTCClient {
             }
         }
 
-        const urlParts = {
-            base: `${this.protocol}://${this.server}/ccm/rpt/repository/workitem?fields=workItem/workItem`,
-            fields: params.fields || this.BUILT_IN_FIELDS_OF_WORKITEM
-        }
-
-        const formattedFilters = filters.length ? `[${filters.join(' and ')}]/` : '';
+        const urlBase = `${this.protocol}://${this.server}/ccm/rpt/repository/workitem?fields=workItem/workItem`;
+        const formattedFilters = filters.length ? `[${filters.join(' and ')}]/` : '/';
         const formattedFields = builtInFields.join('|');
         const formattedCustomFields = customFields.length ? `|allExtensions[key=${customFields.join(' or key=')}]/(*))` : ')';
-        const url = `${urlParts.base}${formattedFilters}(${formattedFields}${formattedCustomFields}`;
+        const url = `${urlBase}${formattedFilters}(${formattedFields}${formattedCustomFields}`;
         return url;
     }
 }
