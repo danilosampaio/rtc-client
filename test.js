@@ -39,7 +39,7 @@ test('getWorkItemtURL - Custom fields', t => {
             'id': 123
         },
         fields: [
-            'id', 'summary', 'customFieldName', 'customField2'
+            'id', 'summary', 'customFieldName', 'customField2/(id|name)'
         ]
     })
     const expected = 'https://s2clmg01/ccm/rpt/repository/workitem?fields=workItem/workItem' + 

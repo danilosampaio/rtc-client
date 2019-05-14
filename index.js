@@ -142,7 +142,7 @@ class RTCClient {
             if (this.BUILT_IN_FIELDS_OF_WORKITEM.indexOf(field) !== -1) {
                 builtInFields.push(field);
             } else {
-                customFields.push(field);
+                customFields.push(field.split('/')[0]);
             }
         }
 
