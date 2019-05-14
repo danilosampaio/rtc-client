@@ -106,7 +106,11 @@ Utils.getURL = function (urlBase, params, BUILT_IN_FIELDS) {
     for (let index = 0; index < fieldNames.length; index++) {
         const fieldName = fieldNames[index];
         if (BUILT_IN_FIELDS[fieldName] !== undefined) {
-            builtInFields.push(BUILT_IN_FIELDS[fieldName].selector);
+            if (fields[fieldName]) {
+                builtInFields.push(fields[fieldName].selector);
+            } else {
+                builtInFields.push(BUILT_IN_FIELDS[fieldName].selector);
+            }
         } else {
             customFields.push(fieldName);
             if (fields[fieldName].selector !== fieldName) {
