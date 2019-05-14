@@ -3,7 +3,7 @@ import RTCClient from './';
 
 test('getWorkItemtURL', t => {
     const rtc = new RTCClient({
-        server: 's2clmg01'
+        server: 'localhost'
     });
     
     const url = rtc.getWorkItemtURL({
@@ -12,7 +12,7 @@ test('getWorkItemtURL', t => {
             'id': 123
         }
     })
-    const expected = 'https://s2clmg01/ccm/rpt/repository/workitem?fields=workItem/workItem' + 
+    const expected = 'https://localhost/ccm/rpt/repository/workitem?fields=workItem/workItem' + 
                         '[type/id=task and id=123]/' + 
                         '(id|resolutionDate|summary|creationDate|dueDate|description|workflowSurrogate|' + 
                          'tags|duration|timeSpent|correctedEstimate|dayModified|creator/(*)|owner/(*)|' + 
@@ -28,9 +28,27 @@ test('getWorkItemtURL', t => {
 	t.is(url, expected);
 });
 
+test('getWorkItemtURL - informed fields', t => {
+    const rtc = new RTCClient({
+        server: 'localhost'
+    });
+    
+    const url = rtc.getWorkItemtURL({
+        fields: ['id', 'summary'],
+        filters: {
+            'type/id': 'task',
+            'id': 123
+        }
+    })
+    const expected = 'https://localhost/ccm/rpt/repository/workitem?fields=workItem/workItem' + 
+                        '[type/id=task and id=123]/' + 
+                        '(id|summary)';
+	t.is(url, expected);
+});
+
 test('getWorkItemtURL - Custom fields', t => {
     const rtc = new RTCClient({
-        server: 's2clmg01'
+        server: 'localhost:8080'
     });
     
     const url = rtc.getWorkItemtURL({
@@ -39,11 +57,31 @@ test('getWorkItemtURL - Custom fields', t => {
             'id': 123
         },
         fields: [
-            'id', 'summary', 'customFieldName', 'customField2/(id|name)'
+            'id', 'summary', 'customField1/(*)'
         ]
     })
-    const expected = 'https://s2clmg01/ccm/rpt/repository/workitem?fields=workItem/workItem' + 
+    const expected = 'https://localhost:8080/ccm/rpt/repository/workitem?fields=workItem/workItem' + 
                         '[type/id=task and id=123]/' + 
-                        '(id|summary|allExtensions[key=customFieldName or key=customField2]/(*))';
+                        '(id|summary|allExtensions[key=customField1]/(*))';
+	t.is(url, expected);
+});
+
+test('getWorkItemtURL - Custom fields with informed properties', t => {
+    const rtc = new RTCClient({
+        server: 'localhost:8080'
+    });
+    
+    const url = rtc.getWorkItemtURL({
+        filters: {
+            'type/id': 'task',
+            'id': 123
+        },
+        fields: [
+            'id', 'summary', 'customField1/(*)', 'customField2/(itemValue/(*))'
+        ]
+    })
+    const expected = 'https://localhost:8080/ccm/rpt/repository/workitem?fields=workItem/workItem' + 
+                        '[type/id=task and id=123]/' + 
+                        '(id|summary|allExtensions[key=customField1 or key=customField2]/((itemValue/(*))))';
 	t.is(url, expected);
 });
