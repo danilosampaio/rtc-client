@@ -1,9 +1,6 @@
 language: node_js
 node_js:
   - '8'
-after_script:
-  - 'cat test/unit/coverage/lcov.info | ./node_modules/.bin/coveralls'
-
 branches:
   only:
   - master

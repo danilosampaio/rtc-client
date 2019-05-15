@@ -4,7 +4,7 @@
   "description": "Nodejs client for the RTC Reportable REST API.",
   "main": "index.js",
   "scripts": {
-    "test": "nyc ava"
+    "test": "nyc ava && nyc report --reporter=text-lcov | coveralls"
   },
   "author": {
     "name": "Danilo Sampaio",
