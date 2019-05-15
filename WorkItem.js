@@ -220,7 +220,8 @@ class WorkItem {
         try {
             const url = this.getURL(params);
             const result = await this.rtc.getRequest(url);
-            return result.workitem.workItem;
+            const workItems = result.workitem.workItem;
+            return this.parseExtensions(workItems.allExtensions);
         } catch (e) {
             console.log(e);
         }
@@ -229,6 +230,21 @@ class WorkItem {
     getURL (params) {
         const urlBase = `${this.rtc.protocol}://${this.rtc.server}/ccm/rpt/repository/workitem?fields=workItem/workItem`;
         return Utils.getURL(urlBase, params, this.BUILT_IN_FIELDS);
+    }
+
+    parseExtensions (extensions) {
+        const obj = {};
+        for (let index = 0; index < extensions.length; index++) {
+            const workItem = extensions[index];
+            
+            for (const key in workItem) {
+                if (workItem.hasOwnProperty(key)) {
+                    const field = workItem[key];
+                    obj[key] = Utils.parseExtensions(field);
+                }
+            }
+        }
+        return obj;
     }
 }
 

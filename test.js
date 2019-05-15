@@ -88,8 +88,8 @@ test('getWorkItemtURL - Custom fields with informed properties', t => {
 	t.is(url, expected);
 });
 
-test('getFieldValues - integerValue', t => {
-    const integerField = Utils.getFieldValues({
+test('parseExtensions - integerValue', t => {
+    const integerField = Utils.parseExtensions({
         key: [
             'id'
         ],
@@ -143,8 +143,8 @@ test('getFieldValues - integerValue', t => {
 	t.deepEqual(integerField, expected);
 });
 
-test('getFieldValues - timestampValue', t => {
-    const integerField = Utils.getFieldValues({
+test('parseExtensions - timestampValue', t => {
+    const integerField = Utils.parseExtensions({
         key: [
             'creationDate'
         ],

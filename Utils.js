@@ -138,7 +138,7 @@ Utils.getURL = function (urlBase, params, BUILT_IN_FIELDS) {
     return url;
 }
 
-Utils.getFieldValues = function (field) {
+Utils.parseExtensions = function (field) {
     const literalTypes = ['booleanValue','integerValue','longValue','doubleValue','smallStringValue',
         'mediumStringValue','largeStringValue','timestampValue','decimalValue'];
     const numberTypes = ['integerValue','longValue','doubleValue','decimalValue'];
