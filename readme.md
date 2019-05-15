@@ -12,6 +12,7 @@ $ npm install --save rtc-client
 ## Usage
 
 ```js
+const RTCClient = require('rtc-client');
 
 const rtc = new RTCClient({
     server: 'localhost',
@@ -20,7 +21,7 @@ const rtc = new RTCClient({
 });
 await rtc.login();
 
-//get workitems bases on filters
+//get workitems using on filters
 const workItens = await rtc.getWorkItems({
     filters: {
         'type/id': 'task',
@@ -28,7 +29,7 @@ const workItens = await rtc.getWorkItems({
     }
 })
 
-//get only informed fields
+//get workitems specifying the fields
 const workItens = rtc.getWorkItems({
     fields: ['id', 'summary'],
     filters: {
