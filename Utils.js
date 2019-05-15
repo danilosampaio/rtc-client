@@ -5,11 +5,15 @@ class Utils {
 }
 
 /**
- * Convert 
+ * Convert a list of fields to a JSON Object.
+ * 
+ * @param {Array} fields list of fields.
+ * 
+ * Input:
  * 
  *      ['fieldName/(*)','fieldName2'] 
  * 
- *  to 
+ * Output:
  * 
  *      {
  *          fieldName: {
@@ -20,7 +24,7 @@ class Utils {
  *          }
  *      }
  */
-Utils.parseFields = function (fields) {
+Utils.convertFieldList2JSON = function (fields) {
     const result = {};
 
     for (let index = 0; index < fields.length; index++) {
@@ -42,15 +46,19 @@ Utils.parseFields = function (fields) {
 }
 
 /**
- * Convert 
+ * Extract field names from a list of fields.
+ * 
+ * @param {Array} fields list of fields.
+ * 
+ *  Input:
  * 
  *      ['fieldName/(*)','fieldName2'] 
  * 
- *  to 
+ *  Output 
  * 
  *      ['fieldName','fieldName2'] 
  */
-Utils.parseFieldNames = function (fields) {
+Utils.extractFieldNames = function (fields) {
     const result = [];
 
     for (let index = 0; index < fields.length; index++) {
@@ -68,13 +76,17 @@ Utils.parseFieldNames = function (fields) {
 }
 
 /**
- * Convert 
+ * Convert filters to RTC url format.
+ * 
+ * @param {Object} filters Object with key and value specifying filters.
+ * 
+ *  Input:
  * 
  *      {
  *          'id': 123
  *      }
  * 
- *  to 
+ *  Output: 
  * 
  *      '[id=123]'
  */
@@ -94,14 +106,25 @@ Utils.parseFilters = function (filters) {
 }
 
 /**
- * urlBase: url part regards to RTC resource, e.g., workitem: https://localhost/ccm/rpt/repository/workitem?fields=workItem/workItem
- * params: fields, filters
- * BUILT_IN_FIELDS: built-in fields of the resource (workitem, foundation, etc.).
+ * Build the url to workItems based on params.
+ * 
+ * @param {string} urlBase url part regards to RTC resource, 
+ *  e.g., workitem: https://localhost/ccm/rpt/repository/workitem?fields=workItem/workItem
+ * @param {Object} params object with the following properties:
+ *   @params.filters: JSON object specifying filters. 
+ *      Ex:
+ *      {
+ *          'type/id': 123
+ *      }
+ *   @params.fields: array of field names. It define workItem fields to be retrived from server.
+ *      Ex:
+ *      ['id', 'type/name', 'owner/(*)']
+ * @param {Object} BUILT_IN_FIELDS built-in fields of the resource (workitem, foundation, etc.).
  */
 Utils.getURL = function (urlBase, params, BUILT_IN_FIELDS) {
     const filters = Utils.parseFilters(params.filters);
-    const fieldNames = params.fields ? Utils.parseFieldNames(params.fields) : Object.keys(BUILT_IN_FIELDS);
-    const fields = params.fields ? Utils.parseFields(params.fields) : BUILT_IN_FIELDS;
+    const fieldNames = params.fields ? Utils.extractFieldNames(params.fields) : Object.keys(BUILT_IN_FIELDS);
+    const fields = params.fields ? Utils.convertFieldList2JSON(params.fields) : BUILT_IN_FIELDS;
     const builtInFields = [];
     const customFields = [];
     const customSelectors = [];
@@ -138,6 +161,12 @@ Utils.getURL = function (urlBase, params, BUILT_IN_FIELDS) {
     return url;
 }
 
+/**
+ * Parse a extension field. Data retrived from RTC server is polluted, so that is necessary to 
+ * parse extensions to build a new extension object.
+ * 
+ * @param {Object} field field object to be parsed.
+ */
 Utils.parseExtensions = function (field) {
     const literalTypes = ['booleanValue','integerValue','longValue','doubleValue','smallStringValue',
         'mediumStringValue','largeStringValue','timestampValue','decimalValue'];

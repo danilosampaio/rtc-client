@@ -1,7 +1,16 @@
 const _ = require('lodash');
 const Utils = require('./Utils');
 
+/**
+ * This class represents the WorkItem Resource in RTC API.
+ */
 class WorkItem {
+
+    /**
+     * WorkItem constructor.
+     * 
+     * @param {Object} rtcClient RTC client performs requests to the server using headers receveid on login.
+     */
     constructor (rtcClient) {
         this.rtc = rtcClient;
 
@@ -217,6 +226,19 @@ class WorkItem {
         }
     }
 
+    /**
+     * Performs a request to RTC server to get a workItem list based on params.
+     * 
+     * @param {Object} params object with the following properties:
+     *   @params.filters: JSON object specifying filters. 
+     *      Ex:
+     *      {
+     *          'type/id': 123
+     *      }
+     *   @params.fields: array of field names. It define workItem fields to be retrived from server.
+     *      Ex:
+     *      ['id', 'type/name', 'owner/(*)']
+     */
     async getData (params) {
         try {
             const url = this.getURL(params);
@@ -228,19 +250,37 @@ class WorkItem {
         }
     }
 
+    /**
+     * Build the url to workItems based on params.
+     * 
+     * @param {Object} params object with the following properties:
+     *   @params.filters: JSON object specifying filters. 
+     *      Ex:
+     *      {
+     *          'type/id': 123
+     *      }
+     *   @params.fields: array of field names. It define workItem fields to be retrived from server.
+     *      Ex:
+     *      ['id', 'type/name', 'owner/(*)']
+     */
     getURL (params) {
         const urlBase = `${this.rtc.protocol}://${this.rtc.server}/ccm/rpt/repository/workitem?fields=workItem/workItem`;
         return Utils.getURL(urlBase, params, this.BUILT_IN_FIELDS);
     }
 
+    /**
+     * It parses a list of workItems. Data retrived from RTC server is polluted, so that is necessary to 
+     * parse extensions to build a new workItem object.
+     * 
+     * @param {Array} workItems list of workItems
+     */
     parseWorkItems (workItems) {
         const parsedList = [];
         for (let index = 0; index < workItems.length; index++) {
             const workItem = workItems[index];
             const extensions = workItem.allExtensions;
-            const parsedWorkItem = _.extend(workItem, {
-                allExtensions: []
-            });
+            const parsedWorkItem = _.extend(workItem, {});
+            parsedWorkItem.allExtensions = [];
 
             for (let j = 0; j < extensions.length; j++) {
                 const extension = extensions[j];
@@ -252,6 +292,12 @@ class WorkItem {
         return parsedList;
     }
 
+    /**
+     * It parses a list of extensions. Data retrived from RTC server is polluted, so that is necessary to 
+     * parse extensions to build a new extension object.
+     * 
+     * @param {Array} extensions list of extensions.
+     */
     parseExtensions (extensions) {
         const obj = {};
         for (let index = 0; index < extensions.length; index++) {

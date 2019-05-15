@@ -1,6 +1,6 @@
 # rtc-client [![Build Status](https://travis-ci.org/danilosampaio/rtc-client.svg?branch=master)](https://travis-ci.org/danilosampaio/rtc-client) [![Coverage Status](https://coveralls.io/repos/github/danilosampaio/rtc-client/badge.svg?branch=master)](https://coveralls.io/github/danilosampaio/rtc-client?branch=master)
 
-> Nodejs client for the RTC Reportable REST API.
+> Nodejs client for the RTC(Rational Team Concert) Reportable REST API.
 
 ## Install
 
@@ -21,7 +21,7 @@ const rtc = new RTCClient({
 });
 await rtc.login();
 
-//get workitems using on filters
+//get workitems using filters
 const workItens = await rtc.getWorkItems({
     filters: {
         'type/id': 'task',

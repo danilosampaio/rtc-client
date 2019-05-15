@@ -2,7 +2,19 @@ const RequestAsync = require('./RequestAsync');
 const XML2JSAsync = require('./XML2JSAsync');
 const WorkItem = require('./WorkItem');
 
+/**
+ * The main classe of rtc-client module.
+ */
 class RTCClient {
+
+    /**
+     * RTCClient constructor.
+     * 
+     * @param {Object} options object with the following properties:
+     *   @options.server: RTC server address. Default value is 'localhost'.
+     *   @options.acceptUntrustedCertificates: accept auto-assigned certificates: INSECURE. Default value is false.
+     *   @options.protocol: default value is 'https'.
+     */
     constructor (options) {
         this.protocol = options.protocol || 'https';
         this.server = options.server || 'localhost';
@@ -12,8 +24,8 @@ class RTCClient {
             'j_password': options.password || null
         }
 
-        //for auto-assigned certificates: INSECURE
-        //TODO: to use a more secure way to accept auto-assigned certificates
+        //accept auto-assigned certificates: INSECURE
+        //TODO: use a more safe way to treat auto-assigned certificates
         if (options.acceptUntrustedCertificates) {
             process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
         }        
@@ -24,11 +36,18 @@ class RTCClient {
         //header cookies used in requests after login.
         this.headers =  null;
 
+        //Wrapper for xml2json using Promises.
         this.xml2json = new XML2JSAsync();
 
         this.workItem = new WorkItem(this);
     }
 
+    /**
+     * Authenticate on RTC server.
+     * 
+     * @param {string} username 
+     * @param {string} password 
+     */
     async login (username, password) {
         try {
             let loginPayload = null;
@@ -56,6 +75,11 @@ class RTCClient {
         }
     }
 
+    /**
+     * Do a request using headers received by login.
+     * 
+     * @param {string} url 
+     */
     async getRequest (url) {
         try {
             const httpResponse = await this.request.get({
@@ -70,6 +94,19 @@ class RTCClient {
         }
     }
 
+    /**
+     * Get a list of workItems based on params.
+     * 
+     * @param {Object} params object with the following properties:
+     *   @params.filters: JSON object specifying filters. 
+     *      Ex:
+     *      {
+     *          'type/id': 123
+     *      }
+     *   @params.fields: array of field names. It define workItem fields to be retrived from server.
+     *      Ex:
+     *      ['id', 'type/name', 'owner/(*)']
+     */
     async getWorkItems (params) {
         try {
             return await this.workItem.getData(params);
@@ -78,7 +115,20 @@ class RTCClient {
         }
     }
 
-    getWorkItemtURL (params) {
+    /**
+     * Build the url to workItems based on params.
+     * 
+     @param {Object} params object with the following properties:
+     *   @params.filters: JSON object specifying filters. 
+     *      Ex:
+     *      {
+     *          'type/id': 123
+     *      }
+     *   @params.fields: array of field names. It define workItem fields to be retrived from server.
+     *      Ex:
+     *      ['id', 'type/name', 'owner/(*)']
+     */
+    getWorkItemsURL (params) {
         return this.workItem.getURL(params);
     }
 }

@@ -8,7 +8,7 @@ test('getWorkItemtURL', t => {
         server: 'localhost'
     });
     
-    const url = rtc.getWorkItemtURL({
+    const url = rtc.getWorkItemsURL({
         filters: {
             'type/id': 'task',
             'id': 123
@@ -35,7 +35,7 @@ test('getWorkItemtURL - informed fields', t => {
         server: 'localhost'
     });
     
-    const url = rtc.getWorkItemtURL({
+    const url = rtc.getWorkItemsURL({
         fields: ['id', 'summary'],
         filters: {
             'type/id': 'task',
@@ -53,7 +53,7 @@ test('getWorkItemtURL - Custom fields', t => {
         server: 'localhost:8080'
     });
     
-    const url = rtc.getWorkItemtURL({
+    const url = rtc.getWorkItemsURL({
         filters: {
             'type/id': 'task',
             'id': 123
@@ -73,7 +73,7 @@ test('getWorkItemtURL - Custom fields with informed properties', t => {
         server: 'localhost:8080'
     });
     
-    const url = rtc.getWorkItemtURL({
+    const url = rtc.getWorkItemsURL({
         filters: {
             'type/id': 'task',
             'id': 123
