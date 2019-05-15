@@ -1,3 +1,5 @@
+const moment = require('moment');
+
 class Utils {
 
 }
@@ -134,6 +136,44 @@ Utils.getURL = function (urlBase, params, BUILT_IN_FIELDS) {
             : ')';
     const url = `${urlBase}${filters}(${formattedFields}${formattedCustomFields}`;
     return url;
+}
+
+Utils.getFieldValues = function (field) {
+    const literalTypes = ['booleanValue','integerValue','longValue','doubleValue','smallStringValue',
+        'mediumStringValue','largeStringValue','timestampValue','decimalValue'];
+    const numberTypes = ['integerValue','longValue','doubleValue','decimalValue'];
+
+    const fieldType = field.type[0];
+
+    const obj = {
+        key: field.key[0],
+        type: fieldType,
+        helperId: field.helperId[0]
+    }
+    
+    if (literalTypes.indexOf(fieldType) !== -1) {
+        if (numberTypes.indexOf(fieldType) !== -1){
+            obj[fieldType] = Number(field[fieldType][0]);
+        } else if (fieldType === 'timestampValue') {
+            obj[fieldType] = moment(field[fieldType][0]).toDate();
+        } else {
+            obj[fieldType] = field[fieldType][0];
+        }     
+        obj['displayValue'] = field['displayValue'][0];
+    } else {
+        if (fieldType === 'itemValue') {
+            obj['itemValue'] = field.itemValue[0] ? field.itemValue[0].itemId[0] : null;
+        } else {
+            for (const prop in field) {
+                if (field.hasOwnProperty(prop)) {
+                    const p = field[prop].length ? field[prop][0] : field[prop];
+                    obj[prop] = p;
+                }
+            }
+        }
+    }
+
+    return obj;
 }
 
 module.exports = Utils;

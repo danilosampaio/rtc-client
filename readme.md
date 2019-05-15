@@ -18,8 +18,9 @@ const rtc = new RTCClient({
     username: 'username',
     password: 'password'
 });
-
 await rtc.login();
+
+//get workitems bases on filters
 const workItens = await rtc.getWorkItems({
     filters: {
         'type/id': 'task',
@@ -27,6 +28,14 @@ const workItens = await rtc.getWorkItems({
     }
 })
 
+//get only informed fields
+const workItens = rtc.getWorkItems({
+    fields: ['id', 'summary'],
+    filters: {
+        'type/id': 'task',
+        'id': 123
+    }
+})
 ```
 
 

@@ -1,5 +1,7 @@
 import test from 'ava';
 import RTCClient from './';
+import Utils from './Utils';
+import moment from 'moment';
 
 test('getWorkItemtURL', t => {
     const rtc = new RTCClient({
@@ -84,4 +86,114 @@ test('getWorkItemtURL - Custom fields with informed properties', t => {
                         '[type/id=task and id=123]/' + 
                         '(id|summary|allExtensions[key=customField1 or key=customField2]/((itemValue/(*))))';
 	t.is(url, expected);
+});
+
+test('getFieldValues - integerValue', t => {
+    const integerField = Utils.getFieldValues({
+        key: [
+            'id'
+        ],
+        helperId: [
+            '_his_03KMEem7bJ9uqCX4HA'
+        ],
+        type: [
+            'integerValue'
+        ],
+        booleanValue: [
+            ''
+        ],
+        integerValue: [
+            '123'
+        ],
+        longValue: [
+            ''
+        ],
+        doubleValue: [
+            ''
+        ],
+        smallStringValue: [
+            ''
+        ],
+        displayName: [
+            'ID'
+        ],
+        displayValue: [
+            '123'
+        ],
+        mediumStringValue: [
+            ''
+        ],
+        largeStringValue: [
+            ''
+        ],
+        timestampValue: [
+            ''
+        ],
+        decimalValue: [
+            ''
+        ]
+    });
+    const expected = {
+        key: 'id',
+        type: 'integerValue',
+        helperId: '_his_03KMEem7bJ9uqCX4HA',
+        integerValue: 123,
+        displayValue: '123'
+    };
+	t.deepEqual(integerField, expected);
+});
+
+test('getFieldValues - timestampValue', t => {
+    const integerField = Utils.getFieldValues({
+        key: [
+            'creationDate'
+        ],
+        helperId: [
+            '_his_03KMEem7bJ9uqCX4HA'
+        ],
+        type: [
+            'timestampValue'
+        ],
+        booleanValue: [
+            ''
+        ],
+        integerValue: [
+            ''
+        ],
+        longValue: [
+            ''
+        ],
+        doubleValue: [
+            ''
+        ],
+        smallStringValue: [
+            ''
+        ],
+        displayName: [
+            'Creation'
+        ],
+        displayValue: [
+            '2019-05-09 16:43:15.419'
+        ],
+        mediumStringValue: [
+            ''
+        ],
+        largeStringValue: [
+            ''
+        ],
+        timestampValue: [
+            '2019-05-09T16:43:15.419-0300'
+        ],
+        decimalValue: [
+            ''
+        ]
+    });
+    const expected = {
+        key: 'creationDate',
+        type: 'timestampValue',
+        helperId: '_his_03KMEem7bJ9uqCX4HA',
+        timestampValue: moment('2019-05-09T16:43:15.419-0300').toDate(),
+        displayValue: '2019-05-09 16:43:15.419'
+    };
+	t.deepEqual(integerField, expected);
 });
