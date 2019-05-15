@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const Utils = require('./Utils');
 
 class WorkItem {
@@ -221,7 +222,7 @@ class WorkItem {
             const url = this.getURL(params);
             const result = await this.rtc.getRequest(url);
             const workItems = result.workitem.workItem;
-            return this.parseExtensions(workItems.allExtensions);
+            return this.parseWorkItems(workItems);
         } catch (e) {
             console.log(e);
         }
@@ -230,6 +231,25 @@ class WorkItem {
     getURL (params) {
         const urlBase = `${this.rtc.protocol}://${this.rtc.server}/ccm/rpt/repository/workitem?fields=workItem/workItem`;
         return Utils.getURL(urlBase, params, this.BUILT_IN_FIELDS);
+    }
+
+    parseWorkItems (workItems) {
+        const parsedList = [];
+        for (let index = 0; index < workItems.length; index++) {
+            const workItem = workItems[index];
+            const extensions = workItem.allExtensions;
+            const parsedWorkItem = _.extend(workItem, {
+                allExtensions: []
+            });
+
+            for (let j = 0; j < extensions.length; j++) {
+                const extension = extensions[j];
+                parsedWorkItem.allExtensions.push(this.parseExtensions(extension));
+            }
+
+            parsedList.push(parsedWorkItem);
+        }
+        return parsedList;
     }
 
     parseExtensions (extensions) {
