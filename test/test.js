@@ -68,7 +68,7 @@ test('getWorkItems', async t => {
                 displayValue: '2019-05-09 16:43:15.419',
                 helperId: '_his_33KMEem7bJ9uqCX4HA',
                 key: 'customField5',
-                timestampValue: moment('2019-05-09 16:43:15.419').toDate(),
+                timestampValue: moment('2019-05-09T16:43:15.419-0300').toDate(),
                 type: 'timestampValue',
             },
             {
