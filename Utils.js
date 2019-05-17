@@ -167,42 +167,61 @@ Utils.getURL = function (urlBase, params, BUILT_IN_FIELDS) {
  * 
  * @param {Object} field field object to be parsed.
  */
-Utils.parseExtensions = function (field) {
+Utils.parseExtension = function (field) {
     const literalTypes = ['booleanValue','integerValue','longValue','doubleValue','smallStringValue',
         'mediumStringValue','largeStringValue','timestampValue','decimalValue'];
     const numberTypes = ['integerValue','longValue','doubleValue','decimalValue'];
 
-    const fieldType = field.type[0];
+    const fieldType = field.type;
 
     const obj = {
-        key: field.key[0],
+        key: field.key,
         type: fieldType,
-        helperId: field.helperId[0]
+        helperId: field.helperId
     }
     
     if (literalTypes.indexOf(fieldType) !== -1) {
         if (numberTypes.indexOf(fieldType) !== -1){
-            obj[fieldType] = Number(field[fieldType][0]);
+            obj[fieldType] = Number(field[fieldType]);
         } else if (fieldType === 'timestampValue') {
-            obj[fieldType] = moment(field[fieldType][0]).toDate();
+            obj[fieldType] = moment(field[fieldType]).toDate();
         } else {
-            obj[fieldType] = field[fieldType][0];
+            obj[fieldType] = field[fieldType];
         }     
-        obj['displayValue'] = field['displayValue'][0];
+        obj['displayValue'] = field['displayValue'];
     } else {
         if (fieldType === 'itemValue') {
-            obj['itemValue'] = field.itemValue[0] ? field.itemValue[0].itemId[0] : null;
+            obj['itemValue'] = field.itemValue ? field.itemValue.itemId : null;
         } else {
             for (const prop in field) {
                 if (field.hasOwnProperty(prop)) {
-                    const p = field[prop].length ? field[prop][0] : field[prop];
-                    obj[prop] = p;
+                    obj[prop] = field[prop];
                 }
             }
         }
     }
 
     return obj;
+}
+
+Utils.parseBuiltInField = function (fieldName, fieldValue, BUILT_IN_FIELDS) {
+    /*let value = fieldValue;;
+    if (BUILT_IN_FIELDS[fieldName]) {
+        value = Array.isArray(fieldValue) ? fieldValue[0] : fieldValue;
+    } else {
+        value = fieldValue;
+    }*/
+
+    const numberTypes = ['xs:integer','xs:long'];
+    const dateTypes = ['xs:time','xs:date'];
+
+    if (numberTypes.indexOf(BUILT_IN_FIELDS[fieldName].type) !== -1) {
+        return Number(fieldValue);
+    } else if (dateTypes.indexOf(BUILT_IN_FIELDS[fieldName].type) !== -1) {
+        return moment(fieldValue).toDate();
+    } else {
+        return fieldValue;
+    }
 }
 
 module.exports = Utils;

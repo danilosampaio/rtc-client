@@ -36,10 +36,13 @@ class RTCClient {
         //header cookies used in requests after login.
         this.headers =  null;
 
-        //Wrapper for xml2json using Promises.
-        this.xml2json = new XML2JSAsync();
+        //explicitArray (default: true): on xml2json conversion, always put child nodes in an array if true; otherwise an array is created only if there is more than one.
+        this.explicitArray = options.explicitArray !== undefined ? options.explicitArray : true;
 
-        this.workItem = new WorkItem(this);
+        //Wrapper for xml2json using Promises.
+        this.xml2json = new XML2JSAsync({explicitArray: this.explicitArray});
+
+        this.workItem = new WorkItem(this, {explicitArray: this.explicitArray});
     }
 
     /**

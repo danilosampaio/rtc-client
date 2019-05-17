@@ -11,8 +11,9 @@ class WorkItem {
      * 
      * @param {Object} rtcClient RTC client performs requests to the server using headers receveid on login.
      */
-    constructor (rtcClient) {
+    constructor (rtcClient, options) {
         this.rtc = rtcClient;
+        this.explicitArray = options && options.explicitArray !== undefined ? options.explicitArray : true;
 
         this.BUILT_IN_FIELDS = {
             id: {
@@ -208,7 +209,7 @@ class WorkItem {
                 type: 'com.ibm.team.repository.StringExtensionEntry'
             },
             allExtensions: {
-                selector: 'allExtensions/(*)',
+                selector: 'allExtensions/(*/*)',
                 type: 'com.ibm.team.workitem.ExtensionEntry'
             },
             timeSheetEntries: {
@@ -243,7 +244,7 @@ class WorkItem {
         try {
             const url = this.getURL(params);
             const result = await this.rtc.getRequest(url);
-            const workItems = result.workitem.workItem;
+            const workItems = this.explicitArray ? result.workitem.workItem : [result.workitem.workItem];
             return this.parseWorkItems(workItems);
         } catch (e) {
             console.log(e);
@@ -278,39 +279,27 @@ class WorkItem {
         const parsedList = [];
         for (let index = 0; index < workItems.length; index++) {
             const workItem = workItems[index];
+
+            for (const fieldName in workItem) {
+                if (fieldName !== 'allExtensions' && workItem.hasOwnProperty(fieldName)) {
+                    const fieldValue = workItem[fieldName];
+                    workItem[fieldName] = Utils.parseBuiltInField(fieldName, fieldValue, this.BUILT_IN_FIELDS);
+                }
+            }
+
+
             const extensions = workItem.allExtensions;
             const parsedWorkItem = _.extend(workItem, {});
             parsedWorkItem.allExtensions = [];
 
             for (let j = 0; j < extensions.length; j++) {
                 const extension = extensions[j];
-                parsedWorkItem.allExtensions.push(this.parseExtensions(extension));
+                parsedWorkItem.allExtensions.push(Utils.parseExtension(extension));
             }
 
             parsedList.push(parsedWorkItem);
         }
         return parsedList;
-    }
-
-    /**
-     * It parses a list of extensions. Data retrived from RTC server is polluted, so that is necessary to 
-     * parse extensions to build a new extension object.
-     * 
-     * @param {Array} extensions list of extensions.
-     */
-    parseExtensions (extensions) {
-        const obj = {};
-        for (let index = 0; index < extensions.length; index++) {
-            const workItem = extensions[index];
-            
-            for (const key in workItem) {
-                if (workItem.hasOwnProperty(key)) {
-                    const field = workItem[key];
-                    obj[key] = Utils.parseExtensions(field);
-                }
-            }
-        }
-        return obj;
     }
 }
 

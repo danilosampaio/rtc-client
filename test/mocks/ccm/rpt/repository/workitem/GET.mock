@@ -1,0 +1,140 @@
+HTTP/1.1 200 OK
+Content-Type: application/xml; charset=utf-8
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<workitem rel="next" Version="1.0.0">
+	<workItem>
+		<id>123</id>
+		<type>
+			<name>Task</name>
+		</type>		
+		<summary>Awesome Task</summary>
+		<description>Awesome Task</description>
+		<creationDate>2019-05-09T15:59:08.067-0300</creationDate>
+		<state>
+			<name>Doing</name>
+		</state>
+		<allExtensions>
+			<key>customField1</key>
+			<helperId>_his_03KMEem7bJ9uqCX4HA</helperId>
+			<type>integerValue</type>
+			<booleanValue></booleanValue>
+			<integerValue>999</integerValue>
+			<longValue></longValue>
+			<doubleValue></doubleValue>
+			<smallStringValue></smallStringValue>
+			<displayName>Custom Field 1</displayName>
+			<displayValue>999</displayValue>
+			<mediumStringValue></mediumStringValue>
+			<largeStringValue></largeStringValue>
+			<timestampValue></timestampValue>
+			<decimalValue></decimalValue>
+		</allExtensions>
+		<allExtensions>
+			<key>customField2</key>
+			<helperId>_his_yHKMEem7bJ9uqCX4HA</helperId>
+			<type>smallStringValue</type>
+			<booleanValue></booleanValue>
+			<integerValue></integerValue>
+			<longValue></longValue>
+			<doubleValue>0.0</doubleValue>
+			<smallStringValue>_V6R_0DrdEeWhGKxJw2hj2A</smallStringValue>
+			<displayName>Custom Field 2</displayName>
+			<displayValue>Test 2</displayValue>
+			<mediumStringValue></mediumStringValue>
+			<largeStringValue></largeStringValue>
+			<timestampValue></timestampValue>
+			<decimalValue></decimalValue>
+		</allExtensions>
+		<allExtensions>
+			<key>customField3</key>
+			<helperId>_his__3KMEem7bJ9uqCX4HA</helperId>
+			<type>mediumStringValue</type>
+			<booleanValue></booleanValue>
+			<integerValue></integerValue>
+			<longValue></longValue>
+			<doubleValue>0.0</doubleValue>
+			<smallStringValue></smallStringValue>
+			<displayName>Custom Field 3</displayName>
+			<displayValue>Test 3</displayValue>
+			<mediumStringValue>Test 3</mediumStringValue>
+			<largeStringValue></largeStringValue>
+			<timestampValue></timestampValue>
+			<decimalValue></decimalValue>
+		</allExtensions>
+		<allExtensions>
+			<key>customField4</key>
+			<helperId>_his_-3KMEem7bJ9uqCX4HA</helperId>
+			<type>largeStringValue</type>
+			<booleanValue></booleanValue>
+			<integerValue></integerValue>
+			<longValue></longValue>
+			<doubleValue>0.0</doubleValue>
+			<smallStringValue></smallStringValue>
+			<displayName>Custom Field 4</displayName>
+			<displayValue>A large string...</displayValue>
+			<mediumStringValue></mediumStringValue>
+			<largeStringValue>A large string...</largeStringValue>
+			<timestampValue></timestampValue>
+			<decimalValue></decimalValue>
+		</allExtensions>
+		<allExtensions>
+			<key>customField5</key>
+			<helperId>_his_33KMEem7bJ9uqCX4HA</helperId>
+			<type>timestampValue</type>
+			<booleanValue></booleanValue>
+			<integerValue></integerValue>
+			<longValue></longValue>
+			<doubleValue></doubleValue>
+			<smallStringValue></smallStringValue>
+			<displayName>Custom Field 5</displayName>
+			<displayValue>2019-05-09 16:43:15.419</displayValue>
+			<mediumStringValue></mediumStringValue>
+			<largeStringValue></largeStringValue>
+			<timestampValue>2019-05-09T16:43:15.419-0300</timestampValue>
+			<decimalValue></decimalValue>
+		</allExtensions>
+		<allExtensions>
+			<key>customField6</key>
+			<helperId>_hitABnKMEem7bJ9uqCX4HA</helperId>
+			<type>decimalValue</type>
+			<booleanValue></booleanValue>
+			<integerValue></integerValue>
+			<longValue></longValue>
+			<doubleValue></doubleValue>
+			<smallStringValue></smallStringValue>
+			<displayName>Custom Field 6</displayName>
+			<displayValue>20.36</displayValue>
+			<mediumStringValue></mediumStringValue>
+			<largeStringValue></largeStringValue>
+			<timestampValue></timestampValue>
+			<decimalValue>20.36</decimalValue>
+		</allExtensions>
+		<allExtensions>
+			<key>customField7</key>
+			<helperId>_hitAHXKMEem7bJ9uqCX4HA</helperId>
+			<type>itemValue</type>
+			<booleanValue></booleanValue>
+			<integerValue></integerValue>
+			<longValue></longValue>
+			<doubleValue></doubleValue>
+			<smallStringValue></smallStringValue>
+			<displayName>Custom Field 7</displayName>
+			<displayValue></displayValue>
+			<mediumStringValue></mediumStringValue>
+			<largeStringValue></largeStringValue>
+			<timestampValue></timestampValue>
+			<decimalValue></decimalValue>
+			<itemValue>
+				<uniqueId>ea331fd38951a36c136303b29d1380a2</uniqueId>
+				<reportableUrl>https://s2clmg01/jts/rpt/repository/workitem/contributor/itemId/_48iXP9gLEeKjzZVCwlwn7g</reportableUrl>
+				<itemType>com.ibm.team.repository.Contributor</itemType>
+				<stateId>_JOJDvdihEeS0Fb6-Y9rrOQ</stateId>
+				<itemId>_48iXP9gLEeKjzZVCwlwn7g</itemId>
+				<contextId>_8lNyYNwSEd2pIJ5QVwgQGg</contextId>
+				<modified>2015-04-01T15:58:54.810-0300</modified>
+				<modifiedBy/>
+			</itemValue>
+		</allExtensions>
+	</workItem>
+</workitem>
