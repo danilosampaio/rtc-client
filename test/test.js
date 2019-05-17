@@ -83,6 +83,7 @@ test('getWorkItems', async t => {
                 itemValue: '_48iXP9gLEeKjzZVCwlwn7g',
                 key: 'customField7',
                 type: 'itemValue',
+                itemType: 'com.ibm.team.repository.Contributor'
             }
         ]
     }];

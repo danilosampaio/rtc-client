@@ -192,6 +192,7 @@ Utils.parseExtension = function (field) {
     } else {
         if (fieldType === 'itemValue') {
             obj['itemValue'] = field.itemValue ? field.itemValue.itemId : null;
+            obj['itemType'] = field.itemValue ? field.itemValue.itemType : null;
         } else {
             for (const prop in field) {
                 if (field.hasOwnProperty(prop)) {
@@ -205,19 +206,12 @@ Utils.parseExtension = function (field) {
 }
 
 Utils.parseBuiltInField = function (fieldName, fieldValue, BUILT_IN_FIELDS) {
-    /*let value = fieldValue;;
-    if (BUILT_IN_FIELDS[fieldName]) {
-        value = Array.isArray(fieldValue) ? fieldValue[0] : fieldValue;
-    } else {
-        value = fieldValue;
-    }*/
-
     const numberTypes = ['xs:integer','xs:long'];
     const dateTypes = ['xs:time','xs:date'];
 
-    if (numberTypes.indexOf(BUILT_IN_FIELDS[fieldName].type) !== -1) {
+    if (fieldValue && numberTypes.indexOf(BUILT_IN_FIELDS[fieldName].type) !== -1) {
         return Number(fieldValue);
-    } else if (dateTypes.indexOf(BUILT_IN_FIELDS[fieldName].type) !== -1) {
+    } else if (fieldValue && dateTypes.indexOf(BUILT_IN_FIELDS[fieldName].type) !== -1) {
         return moment(fieldValue).toDate();
     } else {
         return fieldValue;
