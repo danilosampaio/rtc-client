@@ -54,7 +54,7 @@ const contributors = await rtc.getContributors({
 })
 ```
 
-### Contructor options
+### Constructor options
 
 `server`: RTC server address. Default value is 'localhost'.
 

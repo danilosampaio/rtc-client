@@ -184,7 +184,7 @@ Utils.parseExtension = function (field) {
         if (numberTypes.indexOf(fieldType) !== -1){
             obj[fieldType] = Number(field[fieldType]);
         } else if (fieldType === 'timestampValue') {
-            obj[fieldType] = moment(field[fieldType]).toDate();
+            obj[fieldType] = field[fieldType] ? moment(field[fieldType]).toDate() : null;
         } else {
             obj[fieldType] = field[fieldType];
         }     
