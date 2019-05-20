@@ -57,10 +57,15 @@ const contributors = await rtc.getContributors({
 ### Contructor options
 
 `server`: RTC server address. Default value is 'localhost'.
+
 `username`: user name for login.
+
 `password`: password for login.
+
 `protocol`: default value is 'https'.
+
 `acceptUntrustedCertificates`: accept auto-assigned certificates: INSECURE. Default value is false.
+
 `explicitArray`: on xml2json conversion, always put child nodes in an array if true; otherwise an array is created only if there is more than one. Default is true.
 
 
