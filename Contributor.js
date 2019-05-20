@@ -54,7 +54,7 @@ class Contributor {
             },
             reportableUrl: {
                 type: 'xs:string',
-                selector: 'itemTypereportableUrl'
+                selector: 'reportableUrl'
             },
             stateId: {
                 type: 'xs:string',
