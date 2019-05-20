@@ -1,0 +1,20 @@
+HTTP/1.1 200 OK
+Content-Type: application/xml; charset=utf-8
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<foundation rel="next" Version="1.0.0">
+	<contributor>
+		<itemId>_Gtl3v81VEeKjzZVCwlwn7g</itemId>
+		<uniqueId>6215b7930b1364b0f9155628b56e372e</uniqueId>
+		<reportableUrl>https://s2clmg01/jts/rpt/repository/foundation/contributor/itemId/_Gtl3v81VEeKjzZVCwlwn7g</reportableUrl>
+		<itemType>com.ibm.team.repository.Contributor</itemType>
+		<stateId>_Lv2yjdihEeS0Fb6-Y9rrOQ</stateId>
+		<contextId>_8lNyYNwSEd2pIJ5QVwgQGg</contextId>
+		<modified>2015-04-01T15:59:11.767-0300</modified>
+		<emailAddress>danilo.sampaio@gmail.com</emailAddress>
+		<userId>999</userId>
+		<name>Danilo Sampaio</name>
+		<archived>false</archived>
+		<modifiedBy></modifiedBy>
+	</contributor>
+</foundation>

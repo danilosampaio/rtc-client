@@ -91,6 +91,36 @@ test('getWorkItems', async t => {
 	t.deepEqual(workItems[0], expected[0]);
 });
 
+test('getContributors', async t => {
+    const rtc = new RTCClient({
+        server: 'localhost:9001',
+        protocol: 'http',
+        explicitArray:  false
+    });
+    
+    const contributors = await rtc.getContributors({
+        filters: {
+            'itemId': '_Gtl3v81VEeKjzZVCwlwn7g'
+        }
+    })
+    const expected = [{
+        itemId: '_Gtl3v81VEeKjzZVCwlwn7g',
+		uniqueId: '6215b7930b1364b0f9155628b56e372e',
+		reportableUrl: 'https://s2clmg01/jts/rpt/repository/foundation/contributor/itemId/_Gtl3v81VEeKjzZVCwlwn7g',
+		itemType: 'com.ibm.team.repository.Contributor',
+		stateId: '_Lv2yjdihEeS0Fb6-Y9rrOQ',
+		contextId: '_8lNyYNwSEd2pIJ5QVwgQGg',
+		modified: moment('2015-04-01T15:59:11.767-0300').toDate(),
+		emailAddress: 'danilo.sampaio@gmail.com',
+		userId: '999',
+		name: 'Danilo Sampaio',
+		archived: false,
+		modifiedBy: ''
+    }];
+
+	t.deepEqual(contributors[0], expected[0]);
+});
+
 test('getWorkItemtURL', t => {
     const rtc = new RTCClient({
         server: 'localhost',

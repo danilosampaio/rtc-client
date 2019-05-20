@@ -11,6 +11,8 @@ $ npm install --save rtc-client
 
 ## Usage
 
+### Init RTC Client
+
 ```js
 const RTCClient = require('rtc-client');
 
@@ -20,16 +22,20 @@ const rtc = new RTCClient({
     password: 'password'
 });
 await rtc.login();
+```
 
-//get workitems using filters
+### Get workitems using filters
+```js
 const workItens = await rtc.getWorkItems({
     filters: {
         'type/id': 'task',
         'id': 123
     }
 })
+```
 
-//get workitems specifying the fields
+### Get workitems specifying fields
+```js
 const workItens = rtc.getWorkItems({
     fields: ['id', 'summary'],
     filters: {
@@ -38,6 +44,24 @@ const workItens = rtc.getWorkItems({
     }
 })
 ```
+
+### Get Contributors using filters
+```js
+const contributors = await rtc.getContributors({
+    filters: {
+        'itemId': '123'
+    }
+})
+```
+
+### Contructor options
+
+`server`: RTC server address. Default value is 'localhost'.
+`username`: user name for login.
+`password`: password for login.
+`protocol`: default value is 'https'.
+`acceptUntrustedCertificates`: accept auto-assigned certificates: INSECURE. Default value is false.
+`explicitArray`: on xml2json conversion, always put child nodes in an array if true; otherwise an array is created only if there is more than one. Default is true.
 
 
 

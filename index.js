@@ -1,6 +1,7 @@
 const RequestAsync = require('./RequestAsync');
 const XML2JSAsync = require('./XML2JSAsync');
 const WorkItem = require('./WorkItem');
+const Contributor = require('./Contributor');
 
 /**
  * The main classe of rtc-client module.
@@ -43,6 +44,7 @@ class RTCClient {
         this.xml2json = new XML2JSAsync({explicitArray: this.explicitArray});
 
         this.workItem = new WorkItem(this, {explicitArray: this.explicitArray});
+        this.contributor = new Contributor(this, {explicitArray: this.explicitArray});
     }
 
     /**
@@ -133,6 +135,44 @@ class RTCClient {
      */
     getWorkItemsURL (params) {
         return this.workItem.getURL(params);
+    }
+
+    /**
+     * Get a list of contributors based on params.
+     * 
+     * @param {Object} params object with the following properties:
+     *   @params.filters: JSON object specifying filters. 
+     *      Ex:
+     *      {
+     *          'itemId': 123
+     *      }
+     *   @params.fields: array of field names. It define contributor fields to be retrived from server.
+     *      Ex:
+     *      ['itemId', 'name']
+     */
+    async getContributors (params) {
+        try {
+            return await this.contributor.getData(params);
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    /**
+     * Build the url to contributors based on params.
+     * 
+     @param {Object} params object with the following properties:
+     *   @params.filters: JSON object specifying filters. 
+     *      Ex:
+     *      {
+     *          'itemId': 123
+     *      }
+     *   @params.fields: array of field names. It define contributor fields to be retrived from server.
+     *      Ex:
+     *      ['itemId', 'name']
+     */
+    getContributorsURL (params) {
+        return this.contributor.getURL(params);
     }
 }
 

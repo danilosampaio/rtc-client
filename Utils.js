@@ -208,11 +208,14 @@ Utils.parseExtension = function (field) {
 Utils.parseBuiltInField = function (fieldName, fieldValue, BUILT_IN_FIELDS) {
     const numberTypes = ['xs:integer','xs:long'];
     const dateTypes = ['xs:time','xs:date'];
+    const fieldType = BUILT_IN_FIELDS[fieldName] ? BUILT_IN_FIELDS[fieldName].type : '';
 
-    if (fieldValue && numberTypes.indexOf(BUILT_IN_FIELDS[fieldName].type) !== -1) {
+    if (fieldValue && numberTypes.indexOf(fieldType) !== -1) {
         return Number(fieldValue);
-    } else if (fieldValue && dateTypes.indexOf(BUILT_IN_FIELDS[fieldName].type) !== -1) {
+    } else if (fieldValue && dateTypes.indexOf(fieldType) !== -1) {
         return moment(fieldValue).toDate();
+    } else if (fieldValue && fieldType === 'xs:boolean'){
+        return fieldValue === 'true' ? true : false;
     } else {
         return fieldValue;
     }
